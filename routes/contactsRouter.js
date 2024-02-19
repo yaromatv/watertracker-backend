@@ -1,12 +1,11 @@
 import express from "express";
-import contactsControllers from "../controllers/contactsControllers.js";
-const {
+import {
     getAllContacts,
     getOneContact,
     deleteContact,
     createContact,
     updateContact,
-} = contactsControllers;
+} from "../controllers/contactsControllers.js";
 
 import { isEmptyBody, validateBody, isValidId } from "../helpers/index.js";
 import {
