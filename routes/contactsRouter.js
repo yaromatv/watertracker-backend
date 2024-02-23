@@ -1,13 +1,20 @@
 import express from "express";
-import {
+
+import contactsControllers from "../controllers/contactsControllers.js";
+const {
     getAllContacts,
     getOneContact,
     deleteContact,
     createContact,
     updateContact,
-} from "../controllers/contactsControllers.js";
+} = contactsControllers;
 
-import { isEmptyBody, validateBody, isValidId } from "../helpers/index.js";
+import {
+    authenticate,
+    isEmptyBody,
+    validateBody,
+    isValidId,
+} from "../helpers/index.js";
 import {
     createContactSchema,
     updateContactSchema,
@@ -19,6 +26,8 @@ const contactUpdateValidate = validateBody(updateContactSchema);
 const updateFavoriteValidate = validateBody(updateFavoriteSchema);
 
 const contactsRouter = express.Router();
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get("/", getAllContacts);
 
