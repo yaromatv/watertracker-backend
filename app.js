@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 
 import authRouter from "./routes/authRouter.js";
 import contactsRouter from "./routes/contactsRouter.js";
+import waterRouter from "./routes/waterRouter.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/api/users", authRouter);
+app.use("/api/water", waterRouter);
 app.use("/api/contacts", contactsRouter);
 
 app.use((_, res) => {
