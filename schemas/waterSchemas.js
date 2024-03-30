@@ -6,7 +6,7 @@ import { handleSaveError, runValidatorsAndUpdate } from "./hooks.js";
 const waterSchema = new Schema(
     {
         amount: {
-            type: number,
+            type: Number,
             required: [true, "Set amount of consumed water in ml"],
         },
         date: {
