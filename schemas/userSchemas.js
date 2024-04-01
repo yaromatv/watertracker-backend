@@ -32,6 +32,7 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
       max: [15000, "Max water rate value is 15000"],
+      min: [0, "Min water rate value is 0"],
     },
   },
   { versionKey: false, timestamps: true }
