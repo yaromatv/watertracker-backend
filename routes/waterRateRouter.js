@@ -7,7 +7,7 @@ import { waterRateSchema } from "../schemas/waterRateSchema.js";
 const { updateWaterRate } = waterRateControllers;
 waterRateRouter.use(authenticate);
 waterRateRouter.patch(
-  "/:id/waterRate",
+  "/:id/rate",
   validateBody(waterRateSchema),
   updateWaterRate
 );
