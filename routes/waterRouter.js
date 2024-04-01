@@ -1,14 +1,20 @@
 import express from "express";
 
 import waterControllers from "../controllers/waterControllers.js";
-const { getWater, getOneWater, addWater, updateWater, deleteWater } =
-    waterControllers;
+const {
+  getWater,
+  getOneWater,
+  addWater,
+  updateWater,
+  deleteWater,
+  getTodayWater,
+} = waterControllers;
 
 import {
-    authenticate,
-    isEmptyBody,
-    validateBody,
-    isValidId,
+  authenticate,
+  isEmptyBody,
+  validateBody,
+  isValidId,
 } from "../helpers/index.js";
 import { addWaterSchema } from "../schemas/waterSchemas.js";
 
@@ -20,16 +26,18 @@ waterRouter.use(authenticate);
 
 waterRouter.get("/", getWater);
 
+waterRouter.get("/today", getTodayWater);
+
 waterRouter.get("/:waterId", isValidId, getOneWater);
 
 waterRouter.post("/", isEmptyBody, addWaterValidate, addWater);
 
 waterRouter.put(
-    "/:waterId",
-    isValidId,
-    isEmptyBody,
-    addWaterValidate,
-    updateWater
+  "/:waterId",
+  isValidId,
+  isEmptyBody,
+  addWaterValidate,
+  updateWater
 );
 
 waterRouter.delete("/:waterId", isValidId, deleteWater);
