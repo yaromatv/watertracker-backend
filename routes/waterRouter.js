@@ -26,9 +26,9 @@ waterRouter.use(authenticate);
 
 waterRouter.get("/", getWater);
 
-waterRouter.get("/list/:waterId", isValidId, getOneWater);
-
 waterRouter.get("/today", getTodayWater);
+
+waterRouter.get("/:waterId", isValidId, getOneWater);
 
 waterRouter.post("/", isEmptyBody, addWaterValidate, addWater);
 

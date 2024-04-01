@@ -1,9 +1,8 @@
 import Water from "../schemas/waterSchemas.js";
-
 import HttpError, {
   calculateWaterPercent,
   ctrlWrapper,
-  getDateComponents,
+  getStartAndEndOfDay,
   totalDailyWater,
 } from "../helpers/index.js";
 
@@ -42,15 +41,15 @@ const getOneWater = async (req, res) => {
 const getTodayWater = async (req, res) => {
   const { _id: owner } = req.user;
   //   const { dailyNorma } = await User.findById(owner);
+  // const { day } = req.body;
 
-  const { day, month, year } = getDateComponents(Date.now());
+  const day = new Date("2024-01-15");
+  const { startOfDay, endOfDay } = getStartAndEndOfDay(day);
 
   const dailyWaterList = await Water.find(
     {
       owner,
-      day,
-      month,
-      year,
+      date: { $gte: startOfDay, $lt: endOfDay },
     },
     "amount date"
   ).exec();
@@ -59,7 +58,9 @@ const getTodayWater = async (req, res) => {
 
   const percent = calculateWaterPercent(total, 5000);
 
-  res.status(201).json({
+  res.status(200).json({
+    statsForDay: day,
+    total,
     percent,
     dailyWaterList,
   });
@@ -67,11 +68,9 @@ const getTodayWater = async (req, res) => {
 
 const addWater = async (req, res) => {
   const { _id: owner } = req.user;
-  const { amount, date } = req.body;
 
-  const { day, month, year } = getDateComponents(date);
+  const result = await Water.create({ ...req.body, owner });
 
-  const result = await Water.create({ amount, date, day, month, year, owner });
   res.status(201).json(result);
 };
 

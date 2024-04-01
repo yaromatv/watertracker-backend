@@ -13,18 +13,6 @@ const waterSchema = new Schema(
       type: Date,
       required: [true, "Set the time when water been consumed"],
     },
-    day: {
-      type: Number,
-      default: null,
-    },
-    month: {
-      type: Number,
-      default: null,
-    },
-    year: {
-      type: Number,
-      default: null,
-    },
     owner: {
       type: Schema.Types.ObjectId,
       required: true,
