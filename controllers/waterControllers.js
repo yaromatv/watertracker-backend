@@ -41,6 +41,7 @@ const getOneWater = async (req, res) => {
 const getTodayWater = async (req, res) => {
   const { _id: owner } = req.user;
   const { waterRate } = await User.findById(owner);
+  // Можна ввести в new Date() будь-яку дату в форматі "2024-01-15"
   const day = new Date(Date.now());
   const { startOfDay, endOfDay } = getStartAndEndOfDay(day);
   const dailyWaterList = await getWaterRecords(owner, startOfDay, endOfDay);
