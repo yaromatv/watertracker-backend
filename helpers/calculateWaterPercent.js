@@ -1,5 +1,5 @@
-const calculateWaterPercent = (totalUse, norma) => {
-  return (totalUse * 100) / norma || null;
+const calculateWaterPercent = (totalUse, norm) => {
+  return (totalUse * 100) / norm || null;
 };
 
 export default calculateWaterPercent;
