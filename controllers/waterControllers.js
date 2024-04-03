@@ -1,3 +1,4 @@
+import User from "../schemas/userSchemas.js";
 import Water from "../schemas/waterSchemas.js";
 import HttpError, {
   calculateWaterPercent,
@@ -39,12 +40,12 @@ const getOneWater = async (req, res) => {
 
 const getTodayWater = async (req, res) => {
   const { _id: owner } = req.user;
-  // const { waterRate } = await User.findById(owner);
+  const { waterRate } = await User.findById(owner);
   const day = new Date(Date.now());
   const { startOfDay, endOfDay } = getStartAndEndOfDay(day);
   const dailyWaterList = await getWaterRecords(owner, startOfDay, endOfDay);
   const total = await totalDailyWater(dailyWaterList);
-  const percent = calculateWaterPercent(total, 5000);
+  const percent = calculateWaterPercent(total, waterRate);
 
   res.status(200).json({
     statsForDay: day,
@@ -56,7 +57,7 @@ const getTodayWater = async (req, res) => {
 
 const getMonthWater = async (req, res) => {
   const { _id: owner } = req.user;
-  // const { waterRate } = await User.findById(owner);
+  const { waterRate } = await User.findById(owner);
   const { year, month } = req.body;
   const daysInMonth = getDaysInMonth(year, month);
   const monthlyWaterList = [];
@@ -74,10 +75,10 @@ const getMonthWater = async (req, res) => {
 
   for (let index = 1; index <= daysInMonth; index += 1) {
     const currentDay = waterListInfoByDay[index];
-    const percent = calculateWaterPercent(currentDay?.total || 0, 5000);
+    const percent = calculateWaterPercent(currentDay?.total || 0, waterRate);
 
     monthlyWaterList.push({
-      waterRate: 5000,
+      waterRate: waterRate,
       percent: percent,
       quantity: currentDay?.count || null,
       date: {
