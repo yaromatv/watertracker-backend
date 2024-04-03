@@ -18,7 +18,7 @@ const updateWaterRate = async (req, res) => {
     throw HttpError(404, `User not found`);
   }
 
-  res.json("Water rate update successfully");
+  res.json("Water rate updated successfully");
 };
 
 export default {
