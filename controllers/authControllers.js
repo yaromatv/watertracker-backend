@@ -34,7 +34,6 @@ const register = async (req, res) => {
     res.status(201).json({
         user: {
             email: newUser.email,
-            subscription: newUser.subscription,
         },
     });
 };
@@ -60,7 +59,6 @@ const login = async (req, res) => {
         token,
         user: {
             email: existUser.email,
-            subscription: existUser.subscription,
         },
     });
 };
@@ -71,8 +69,8 @@ const logout = async (req, res) => {
 };
 
 const getCurrent = async (req, res) => {
-    const { email, subscription } = req.user;
-    res.json({ email, subscription });
+    const { email } = req.user;
+    res.json({ email });
 };
 
 const updateAvatar = async (req, res) => {
