@@ -3,11 +3,12 @@ import { ctrlWrapper } from "../helpers/index.js";
 import User from "../schemas/userSchemas.js";
 
 const updateWaterRate = async (req, res) => {
-  const id = req.params.id;
+  const { authorization = "" } = req.headers;
+  const [_, token] = authorization.split(" ");
 
   const { waterRate } = req.body;
   const result = await User.findOneAndUpdate(
-    { _id: id },
+    { token },
     { waterRate },
     {
       new: true,
@@ -17,7 +18,7 @@ const updateWaterRate = async (req, res) => {
     throw HttpError(404, `User not found`);
   }
 
-  res.json(result);
+  res.json("Water rate update successfully");
 };
 
 export default {

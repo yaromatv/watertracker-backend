@@ -7,10 +7,6 @@ import authenticate from "../helpers/authenticate.js";
 
 const { updateWaterRate } = waterRateControllers;
 waterRateRouter.use(authenticate);
-waterRateRouter.patch(
-  "/:id/rate",
-  validateBody(waterRateSchema),
-  updateWaterRate
-);
+waterRateRouter.patch("/rate", validateBody(waterRateSchema), updateWaterRate);
 
 export default waterRateRouter;
