@@ -8,6 +8,7 @@ const {
   updateWater,
   deleteWater,
   getTodayWater,
+  getMonthWater,
 } = waterControllers;
 
 import {
@@ -27,6 +28,8 @@ waterRouter.use(authenticate);
 waterRouter.get("/", getWater);
 
 waterRouter.get("/today", getTodayWater);
+
+waterRouter.get("/month", getMonthWater);
 
 waterRouter.get("/:waterId", isValidId, getOneWater);
 
