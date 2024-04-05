@@ -1,7 +1,8 @@
 import express from "express";
 
 import authControllers from "../controllers/authControllers.js";
-const { register, login, logout, getCurrent, updateAvatar } = authControllers;
+const { register, login, logout, getCurrent, updateCurrent, updateAvatar } =
+    authControllers;
 
 import {
     authenticate,
@@ -9,19 +10,29 @@ import {
     validateBody,
     upload,
 } from "../helpers/index.js";
-import { userSignSchema } from "../schemas/userSchemas.js";
-
-const userSignValidate = validateBody(userSignSchema);
+import { userSignSchema, userUpdateSchema } from "../schemas/userSchemas.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/register", isEmptyBody, userSignValidate, register);
+authRouter.post(
+    "/register",
+    isEmptyBody,
+    validateBody(userSignSchema),
+    register
+);
 
-authRouter.post("/login", isEmptyBody, userSignValidate, login);
+authRouter.post("/login", isEmptyBody, validateBody(userSignSchema), login);
 
 authRouter.post("/logout", authenticate, logout);
 
 authRouter.get("/current", authenticate, getCurrent);
+
+authRouter.patch(
+    "/current",
+    authenticate,
+    validateBody(userUpdateSchema),
+    updateCurrent
+);
 
 authRouter.patch(
     "/avatars",
