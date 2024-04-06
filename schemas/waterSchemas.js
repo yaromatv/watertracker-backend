@@ -3,8 +3,6 @@ import Joi from "joi";
 
 import { handleSaveError, runValidatorsAndUpdate } from "./hooks.js";
 
-const currentYear = new Date().getFullYear();
-
 const waterSchema = new Schema(
   {
     amount: {
