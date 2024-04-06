@@ -17,9 +17,10 @@ import {
   validateBody,
   isValidId,
 } from "../helpers/index.js";
-import { addWaterSchema } from "../schemas/waterSchemas.js";
+import { addWaterSchema, monthWaterSchema } from "../schemas/waterSchemas.js";
 
 const addWaterValidate = validateBody(addWaterSchema);
+const monthWaterValidate = validateBody(monthWaterSchema);
 
 const waterRouter = express.Router();
 
@@ -29,7 +30,7 @@ waterRouter.get("/", getWater);
 
 waterRouter.get("/today", getTodayWater);
 
-waterRouter.get("/month", getMonthWater);
+waterRouter.post("/month", monthWaterValidate, getMonthWater);
 
 waterRouter.get("/:waterId", isValidId, getOneWater);
 

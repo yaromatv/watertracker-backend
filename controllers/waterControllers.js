@@ -61,11 +61,19 @@ const getMonthWater = async (req, res) => {
   const { waterRate } = await User.findById(owner);
   const { year, month } = req.body;
   const daysInMonth = getDaysInMonth(year, month);
+  const currentYear = new Date().getFullYear();
   const monthlyWaterList = [];
   const waterListInfoByDay = {};
 
   if (!month || !year) {
     throw HttpError(404, `The date is incorrect`);
+  }
+
+  if (year < String(currentYear - 5) || year > String(currentYear + 5)) {
+    throw HttpError(
+      404,
+      `year must be between ${currentYear - 5} and ${currentYear + 5}`
+    );
   }
 
   const waterListInfo = await getWaterListInfo(owner, month, year);
