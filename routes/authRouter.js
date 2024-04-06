@@ -30,15 +30,16 @@ authRouter.get("/current", authenticate, getCurrent);
 authRouter.patch(
     "/current",
     authenticate,
+    upload.single("avatar"),
     validateBody(userUpdateSchema),
     updateCurrent
 );
 
-authRouter.patch(
-    "/avatars",
-    authenticate,
-    upload.single("avatar"),
-    updateAvatar
-);
+// authRouter.patch(
+//     "/avatars",
+//     authenticate,
+//     upload.single("avatar"),
+//     updateAvatar
+// );
 
 export default authRouter;
