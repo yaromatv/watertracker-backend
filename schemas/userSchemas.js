@@ -58,24 +58,24 @@ export const userUpdateSchema = Joi.object({
     name: Joi.string().optional(),
     email: Joi.string().email().optional(),
     avatar: Joi.object({
-      filename: Joi.string().required(),
-      mimetype: Joi.string().required(),
-      buffer: Joi.binary().required(),
+        filename: Joi.string().required(),
+        mimetype: Joi.string().required(),
+        buffer: Joi.binary().required(),
     }).optional(),
     currentPass: Joi.string().optional(),
     newPass: Joi.string().min(6).when("currentPass", {
         is: Joi.exist(),
         then: Joi.required(),
         otherwise: Joi.optional(),
-      }),
+    }),
     repNewPass: Joi.string()
-      .min(6)
-      .when("currentPass", {
-        is: Joi.exist(),
-        then: Joi.required().valid(Joi.ref("$newPass")),
-        otherwise: Joi.optional(),
-      }),
-  });
+        .min(6)
+        .when("currentPass", {
+            is: Joi.exist(),
+            then: Joi.required().valid(Joi.ref("/newPass")),
+            otherwise: Joi.optional(),
+        }),
+});
 
 const User = model("user", userSchema);
 
