@@ -31,9 +31,11 @@ const userSchema = new Schema(
         },
         name: {
             type: String,
+            default: "",
         },
         gender: {
             type: String,
+            default: "",
         },
     },
     { versionKey: false, timestamps: true }

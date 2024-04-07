@@ -39,6 +39,9 @@ const register = async (req, res) => {
         token,
         user: {
             email: newUser.email,
+            name: newUser.name,
+            avatarURL: newUser.avatarURL,
+            waterRate: newUser.waterRate,
         },
     });
 };
@@ -64,6 +67,9 @@ const login = async (req, res) => {
         token,
         user: {
             email: existUser.email,
+            name: existUser.name,
+            avatarURL: existUser.avatarURL,
+            waterRate: existUser.waterRate,
         },
     });
 };
