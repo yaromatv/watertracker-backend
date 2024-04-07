@@ -39,6 +39,8 @@ const register = async (req, res) => {
         token,
         user: {
             email: newUser.email,
+            name: newUser.name,
+            avatarURL: newUser.avatarURL,
         },
     });
 };
@@ -64,6 +66,8 @@ const login = async (req, res) => {
         token,
         user: {
             email: existUser.email,
+            name: existUser.name,
+            avatarURL: existUser.avatarURL,
         },
     });
 };
