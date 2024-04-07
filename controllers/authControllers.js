@@ -41,6 +41,7 @@ const register = async (req, res) => {
             email: newUser.email,
             name: newUser.name,
             avatarURL: newUser.avatarURL,
+            waterRate: newUser.waterRate,
         },
     });
 };
@@ -68,6 +69,7 @@ const login = async (req, res) => {
             email: existUser.email,
             name: existUser.name,
             avatarURL: existUser.avatarURL,
+            waterRate: existUser.waterRate,
         },
     });
 };
