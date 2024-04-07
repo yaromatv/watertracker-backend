@@ -38,10 +38,10 @@ export const addWaterSchema = Joi.object({
 
 export const monthWaterSchema = Joi.object({
   month: Joi.string()
-    .regex(/^(0[1-9]|1[0-2])$/)
+    .regex(/^(0[1-9]|1[0-2]|[1-9])$/)
     .required()
     .messages({
-      "string.pattern.base": `month must be in MM format`,
+      "string.pattern.base": `month must be in MM format or a single digit`,
       "any.required": `missing required month field`,
     }),
   year: Joi.string().required().length(4).messages({
