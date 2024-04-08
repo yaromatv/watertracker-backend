@@ -1,10 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
-import path from "path";
-import fs from "fs/promises";
-import Jimp from "jimp";
-import { __dirname } from "../helpers/upload.js";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
 import User from "../schemas/userSchemas.js";
 
@@ -13,7 +11,16 @@ import { ctrlWrapper } from "../helpers/index.js";
 
 const { JWT_SECRET } = process.env;
 
-const avatarsDir = path.join(__dirname, "../", "public", "avatars");
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_KEY,
+    api_secret: process.env.CLOUDINARY_SECRET,
+});
+
+const isImage = (file) => {
+    const mimeTypes = ["image/jpeg", "image/png", "image/gif"];
+    return mimeTypes.includes(file.mimetype);
+};
 
 const register = async (req, res) => {
     const { email, password } = req.body;
@@ -92,18 +99,29 @@ const getCurrent = async (req, res) => {
 };
 
 const updateCurrent = async (req, res) => {
-    // AVATAR
-    const { _id } = req.user;
-    const { path: tempUpload, originalname } = req.file;
-    const filename = `${_id}_${originalname}`;
-    const resultUpload = path.join(avatarsDir, filename);
+    // AVATAR CLOUDINARY
+    if (!isImage(req.file)) {
+        throw HttpError(400, "Only image attachments allowed");
+    }
 
-    const image = await Jimp.read(tempUpload);
-    await image.resize(Jimp.AUTO, 250).writeAsync(tempUpload);
+    let cld_upload_stream = cloudinary.uploader.upload_stream(
+        {
+            folder: "avatars",
+            transformation: [
+                { width: 250, height: 250, gravity: "auto", crop: "fill" },
+            ],
+        },
+        (error, result) => {
+            if (error) {
+                throw HttpError(500, error.message);
+            }
+            req.file.url = result.url;
+        }
+    );
+    streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
 
-    await fs.rename(tempUpload, resultUpload);
+    const newAvatarURL = req.file.url;
 
-    const newAvatarURL = path.join("avatars", filename);
     // PASSWORD
     const { currentPass, newPass } = req.body;
 
