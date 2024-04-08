@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
 import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
 
 import User from "../schemas/userSchemas.js";
 
