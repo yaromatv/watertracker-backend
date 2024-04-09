@@ -35,11 +35,4 @@ authRouter.patch(
     updateCurrent
 );
 
-// authRouter.patch(
-//     "/avatars",
-//     authenticate,
-//     upload.single("avatar"),
-//     updateAvatar
-// );
-
 export default authRouter;
