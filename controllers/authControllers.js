@@ -22,6 +22,32 @@ const isImage = (file) => {
     return mimeTypes.includes(file.mimetype);
 };
 
+const uploadAvatarToCloudinary = (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        let cld_upload_stream = cloudinary.uploader.upload_stream(
+            {
+                folder: "avatars",
+                transformation: [
+                    {
+                        width: 250,
+                        height: 250,
+                        gravity: "auto",
+                        crop: "fill",
+                    },
+                ],
+            },
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result.url);
+                }
+            }
+        );
+        streamifier.createReadStream(fileBuffer).pipe(cld_upload_stream);
+    });
+};
+
 const register = async (req, res) => {
     const { email, password } = req.body;
     const existUser = await User.findOne({ email });
@@ -100,42 +126,15 @@ const getCurrent = async (req, res) => {
 
 const updateCurrent = async (req, res) => {
     let newAvatarURL = req.user.avatarURL;
-    // AVATAR CLOUDINARY
+    // AVATAR
+
     if (req.file) {
         if (!isImage(req.file)) {
             throw HttpError(400, "Only image attachments allowed");
         }
 
-        const uploadImageToCloudinary = () => {
-            return new Promise((resolve, reject) => {
-                let cld_upload_stream = cloudinary.uploader.upload_stream(
-                    {
-                        folder: "avatars",
-                        transformation: [
-                            {
-                                width: 250,
-                                height: 250,
-                                gravity: "auto",
-                                crop: "fill",
-                            },
-                        ],
-                    },
-                    (error, result) => {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve(result.url);
-                        }
-                    }
-                );
-                streamifier
-                    .createReadStream(req.file.buffer)
-                    .pipe(cld_upload_stream);
-            });
-        };
-
         try {
-            newAvatarURL = await uploadImageToCloudinary();
+            newAvatarURL = await uploadAvatarToCloudinary(req.file.buffer);
         } catch (error) {
             throw HttpError(500, error.message);
         }
