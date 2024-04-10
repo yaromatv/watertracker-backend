@@ -73,6 +73,7 @@ const register = async (req, res) => {
         user: {
             email: newUser.email,
             name: newUser.name,
+            gender: newUser.gender,
             avatarURL: newUser.avatarURL,
             waterRate: newUser.waterRate,
         },
@@ -101,6 +102,7 @@ const login = async (req, res) => {
         user: {
             email: existUser.email,
             name: existUser.name,
+            gender: existUser.gender,
             avatarURL: existUser.avatarURL,
             waterRate: existUser.waterRate,
         },
