@@ -74,7 +74,7 @@ WaterTracker is a application that allows the user to monitor their daily water 
 
 ## Contributors
 
-- Yaroslav Matvieiev [GitHub](https://github.com/LIGHT131313) || [LinkedIn](https://www.linkedin.com/in/serhii-kozhanov/)
+- Yaroslav Matvieiev [GitHub](https://github.com/LIGHT131313) || [LinkedIn](https://www.linkedin.com/in/yaroslavmatvieiev/)
 - Ihor Berezhnyi [GitHub](https://github.com/iberezhnyi)
 - Nina Raschupkina [GitHub](https://github.com/Ninel35)
 - Olena Horodiuk [GitHub](https://github.com/OlenaUser1982)
