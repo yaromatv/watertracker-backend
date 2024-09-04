@@ -2,7 +2,7 @@
 
 <img src="https://res.cloudinary.com/doj55bihz/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1704651372/img/Logo-890d13ba_to7trg.jpg?_s=public-apps" alt="Logo">
 
-Node.js server for the [WaterTracker](https://anzhela-ostrovska1.github.io/WaterTracker/) || [GitHub](https://github.com/Anzhela-Ostrovska1/WaterTracker)
+Node.js server for the [WaterTracker](https://goitstudentsworks.github.io/fs-92-react-node-Anzhela-Ostrovska1) || [GitHub](https://github.com/Anzhela-Ostrovska1/WaterTracker)
 
 WaterTracker is a application that allows the user to monitor their daily water consumption.
 
